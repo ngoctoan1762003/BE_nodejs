@@ -8,6 +8,8 @@ const UserService = require('./service/userService');
 const UserController = require('./controller/userController');
 
 const router = express.Router();
+router.use(express.json());
+router.use(express.urlencoded({extended: true}));
 //const secretKey = 'duySgroupSecret';
 const userService = new UserService(db);
 const userController = new UserController(userService);

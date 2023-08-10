@@ -20,7 +20,7 @@ class UserService {
         );
 
         if (rows[0].length > 0) {
-            throw new Error('Tên người dùng đã tồn tại');
+            throw new Error('Username already exists');
         }
 
         // Hash password
@@ -41,25 +41,27 @@ class UserService {
         );
 
         // Get the newly inserted user_id
-        const userId = result[0].insertId;
+        //const userId = result[0].insertId;
 
         // Insert the user_id and role_id=1 into user_roles table
-        await this.db.promise().query(`
-            INSERT INTO user_roles(user_id, role_id) VALUES(?, 1)`,
-            [userId]
-        );
+        // await this.db.promise().query(`
+        //     INSERT INTO user_roles(user_id, role_id) VALUES(?, 1)`,
+        //     [userId]
+        // );
 
-        if (result[0].affectedRows === 0) {
-            throw new Error('Đăng kí người dùng thất bại');
-        }
+        // if (result[0].affectedRows === 0) {
+        //     throw new Error('Đăng kí người dùng thất bại');
+        // }
     }
     
     async loginUser(username, password) {
     // Kiểm tra xem người dùng có tồn tại không và lấy thông tin người dùng từ cơ sở dữ liệu
     const rows = await this.db.promise().query(
-        'SELECT u.id, u.username, u.name, u.age, u.email, u.gender, u.Salt, u.password, r.id AS role FROM User u JOIN User_Roles ur ON u.id = ur.user_id JOIN Roles r ON ur.role_id = r.id WHERE u.username = ?',
+        // 'SELECT u.id, u.username, u.name, u.age, u.email, u.gender, u.Salt, u.password, r.id AS role FROM User u JOIN User_Roles ur ON u.id = ur.user_id JOIN Roles r ON ur.role_id = r.id WHERE u.username = ?',
+        // [username]
+        'SELECT u.id, u.username, u.name, u.age, u.email, u.gender, u.Salt, u.password FROM User u WHERE u.username = ?',
         [username]
-    );
+        );
 
     const row = rows[0];
     const user = row[0];

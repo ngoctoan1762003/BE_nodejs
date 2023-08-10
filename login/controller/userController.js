@@ -7,13 +7,13 @@ class UserController {
         try {
             const user = req.body;
             await this.userService.registerUser(user);
-            res.status(200).json({ message: 'Register successfully' });
+            return res.status(200).json({ message: 'Register successfully' });
         } catch (error) {
             console.log(error.message);
             if (error.message === 'Username already exists') {
-                res.status(400).json({ message: 'Username already exists' });
+                return res.status(400).json({ message: 'Username already exists' });
             } else {
-                res.status(500).json({ message: 'Failed to register user' });
+                return res.status(500).json({ message: 'Failed to register user' });
             }
         }
     }

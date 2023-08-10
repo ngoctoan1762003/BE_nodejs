@@ -4,8 +4,8 @@ const knex = require('knex')({
         host: '127.0.0.1',
         port: '3306',
         user: 'root',
-        password: 'hakiyuu004',
-        database: 'sgroup',
+        password: '',
+        database: 'be',
     }
 });
 module.exports = knex;

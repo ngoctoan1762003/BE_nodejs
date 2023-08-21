@@ -119,10 +119,10 @@ class UserService {
     }
     async FindUserToResetPass(email, passwordResetToken) {
         const result = await this.db.promise().query(
-            'SELECT * FROM user WHERE email = ? AND passwordResetToken = ?  ',
+            'SELECT * FROM user WHERE email = ? AND passwordResetToken = ? AND passwordResetExpiration >= ?',
             [email, passwordResetToken, new Date(Date.now())]
         );
-        if (result.affectedRows === 0) {
+        if (!result) {
             throw new Error('User not found');
         }
         const users = result[0];

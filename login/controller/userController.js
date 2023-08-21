@@ -93,18 +93,18 @@ class UserController {
             this.userService.updateUser(user.id, data)
             // Gửi email
             const mailOptions = {
-                emailFrom: "myduyen14125@gmail.com",
+                emailFrom: "toan1762003@gmail.com",
                 emailTo: mailTo,
                 subject: "Password reset requested",
                 text: `Hi ${user.name}, You requested for a password reset. Here's your token: ${token}`,
             };
             try {
                 await mailService.sendEmail(mailOptions);
-                res.send({ message: 'Email sent successfully' });
+                return res.status(201).send({ message: 'Email sent successfully' });
             }
             catch (error) {
                 console.log(error);
-                res.status(500).send({ message: 'Failed to send email' });
+                return res.status(500).send({ message: 'Failed to send email' });
             }
         }
         catch (error) {

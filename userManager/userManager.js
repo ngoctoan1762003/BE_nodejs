@@ -5,12 +5,13 @@ const checkAccess = require('../midleware/checkUser').checkAccess;
 const knex = require("../database/knex");
 const jsonwebtoken = require('jsonwebtoken');
 const { hashPass } = require('../helper/hashing')
+const validateToken = require('../midleware/validateToken')
 const env = require('dotenv');
 env.config();
 
 
 // Lấy danh sách user
-user_router.get('/',checkAccess("View user"), (req, res) => {
+user_router.get('/',checkAccess("View user"), validateToken, (req, res) => {
     let pageNumber = req.query.page;
     const PAGE_SIZE = req.query.paging || 10;
     if (pageNumber) {

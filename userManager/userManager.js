@@ -14,11 +14,13 @@ env.config();
 user_router.get('/',checkAccess("View user"), validateToken, (req, res) => {
     let pageNumber = req.query.page;
     const PAGE_SIZE = req.query.paging || 10;
+    console.log(pageNumber)
+    console.log(PAGE_SIZE)
     if (pageNumber) {
         // pagination
         pageNumber = parseInt(pageNumber);
         if (pageNumber > 0) {
-            const skip = pageNumber * PAGE_SIZE
+            const skip = (pageNumber-1) * PAGE_SIZE
             knex.select('*').from('user').limit(PAGE_SIZE).offset(skip)
                 .then((result) => {
                     res.send(result);
